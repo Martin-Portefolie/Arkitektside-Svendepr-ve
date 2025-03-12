@@ -1,13 +1,13 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Hello HomeController!{% endblock %}
+{% block title %}Forside{% endblock %}
 {% block body %}
 
 <!-- Section Slider-->
 <section class="relative w-full h-[90vh] overflow-hidden top-0" data-controller="slider">
     <div class="absolute inset-0 w-full h-full">
         <div class="relative w-full h-full">
-            {% for i in 1..5 %}
+            {% for i in 1..4 %}
                 <div class="absolute inset-0 w-full h-full transition-opacity duration-1000 {% if loop.first %}opacity-100{% else %}opacity-0{% endif %}" 
                      data-slider-target="slide">
                     <img src="{{ asset('images/slider/slider' ~ i ~ '.jpg') }}" class="w-full h-full object-cover" alt="Slide {{ i }}">
@@ -23,8 +23,8 @@
 
         <!-- Logo & Branding -->
         <div class="flex items-center">
-            <img src="{{ asset('images/logo/logo.png') }}" alt="Logo" 
-                 class="h-16 transition-transform duration-300 hover:scale-110" 
+            <img src="{{ asset('images/logo/logo.png') }}" alt="Logo"
+                 class="h-12 transition-transform duration-300 hover:scale-110"
                  data-navbar-target="logo">
             <span class="text-black text-lg sm:text-xl md:text-2xl font-semibold text-red-800">
                 Design Architects
@@ -79,7 +79,7 @@
                 </svg>
             </div>
             <p class="text-red-700 text-lg font-semibold mt-4 text-center">
-                "Det ligger til vores kreative arkitekter at fokusere på innovative løsninger, hvor de mest moderne kvalitetsmaterialer bliver brugt."
+                Det ligger til vores kreative arkitekter at fokusere på innovative løsninger, hvor de mest moderne kvalitetsmaterialer bliver brugt
             </p>
         </div>
 
@@ -147,7 +147,7 @@
     <section class="bg-gray-50 w-full mx-auto px-6 py-16 mt-20" data-controller="news">
         <div class="max-w-6xl mx-auto">
             <div class="text-left mb-12 relative">
-                <h2 id="Projects" class="text-4xl font-bold text-red-800 uppercase tracking-wide relative inline-block">
+                <h2 id="News" class="text-4xl font-bold text-red-800 uppercase tracking-wide relative inline-block">
                     Nyheder
                     <span class="absolute left-0 bottom-0 w-full h-1 bg-red-600 transform scale-x-75 origin-left"></span>
                 </h2>
@@ -176,7 +176,7 @@
                             {% endif %}
                         </div>
 
-                        <!-- Collapsible Projects Section -->
+                        <!-- Collapsible  Section -->
                         {% if newsItem.project|length > 0 %}
                             <div class="max-h-0 overflow-hidden opacity-0 transition-all duration-500 bg-gray-50 p-6 border-t border-red-800"
                                  data-news-target="project"
@@ -205,56 +205,63 @@
     </section>
 
 
-
-
     <!-- Projects -->
-<section class="bg-gray-100 py-16 mt-20">
-    <div class="max-w-6xl mx-auto px-6">
-        <div class="text-left mb-12 relative">
-            <h2 id="Projects" class="text-4xl font-bold text-red-800 uppercase tracking-wide relative inline-block">
-                Projekter
-                <span class="absolute left-0 bottom-0 w-full h-1 bg-red-600 transform scale-x-75 origin-left"></span>
-            </h2>
-            <p class="text-red-600 mt-2">Se vores seneste arkitektoniske mesterværke</p>
-        </div>
+    <section class="bg-gray-100 py-16 mt-20">
+        <div class="max-w-6xl mx-auto px-6">
+            <div class="text-left mb-12 relative">
+                <h2 id="Projects" class="text-4xl font-bold text-red-800 uppercase tracking-wide relative inline-block">
+                    Projekter
+                    <span class="absolute left-0 bottom-0 w-full h-1 bg-red-600 transform scale-x-75 origin-left"></span>
+                </h2>
+                <p class="text-red-600 mt-2">Se vores seneste arkitektoniske mesterværke</p>
+            </div>
 
-        <div class="grid grid-cols-1 md:grid-cols-2 gap-12">
-            {% for projectsItem in projects %}
-                <div class="bg-white rounded-lg shadow-md overflow-hidden">
-                    <!-- Image Grid -->
-                    <div class="grid grid-cols-2 gap-2 p-4">
-                        {% for image in projectsItem.photos|slice(0, 4) %}
-                            <div class="relative group">
-                                <img src="{{ asset('images/projects/' ~ image) }}" alt="{{ projectsItem.title }}" 
-                                     class="w-full h-40 object-cover rounded-md transition-transform transform group-hover:scale-105">
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-12">
+                {% for projectsItem in projects %}
+                    <div class="bg-white rounded-lg shadow-md overflow-hidden">
+                        <!-- Image Grid -->
+                        <div class="grid grid-cols-2 gap-2 p-4">
+                            {% for image in projectsItem.photos|slice(0, 4) %}
+                                <div class="relative group">
+                                    <img src="{{ asset('images/projects/' ~ image) }}" alt="{{ projectsItem.title }}"
+                                         class="w-full h-40 object-cover rounded-md transition-transform transform group-hover:scale-105">
+                                </div>
+                            {% endfor %}
+                        </div>
+
+                        <!-- Project Info -->
+                        <div class="p-6">
+                            <h3 class="text-xl font-bold text-red-800">{{ projectsItem.title }}</h3>
+
+                            {% if projectsItem.place %}
+                                <p class="text-gray-600">{{ projectsItem.place }}, {{ projectsItem.country }}</p>
+                            {% endif %}
+
+                            <p class="text-gray-700 mt-2 text-sm leading-relaxed line-clamp-4">
+                                {{ projectsItem.text }}
+                            </p>
+
+                            <div class="mt-4">
+                                <button class="text-red-700 hover:text-red-900 text-sm font-semibold"
+                                        data-action="click->news#toggle" data-id="{{ projectsItem.id }}">
+                                    Læs mere
+                                </button>
                             </div>
-                        {% endfor %}
-                    </div>
-
-                    <!-- Project Info -->
-                    <div class="p-6">
-                        <h3 class="text-xl font-bold text-red-800">{{ projectsItem.title }}</h3>
-                        
-                        {% if projectsItem.place %}
-                            <p class="text-gray-600">{{ projectsItem.place }}, {{ projectsItem.country }}</p>
-                        {% endif %}
-                        
-                        <p class="text-gray-700 mt-2 text-sm leading-relaxed line-clamp-4">
-                            {{ projectsItem.text }}
-                        </p>
-
-                        <div class="mt-4">
-                            <button class="text-red-700 hover:text-red-900 text-sm font-semibold" 
-                                    data-action="click->news#toggle" data-id="{{ projectsItem.id }}">
-                                Læs mere 
-                            </button>
                         </div>
                     </div>
-                </div>
-            {% endfor %}
+                {% endfor %}
+            </div>
         </div>
-    </div>
-</section>
+    </section>
+
+    <!-- Scroll to Top Button -->
+    <button id="scrollToTop" class="fixed bottom-6 right-6 bg-red-900 text-white p-3 rounded-full shadow-lg opacity-0 transition-opacity duration-300 hover:bg-red-700"
+            data-controller="scrolltop"
+            data-action="click->scrolltop#scrollToTop">
+        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 15l7-7 7 7"></path>
+        </svg>
+    </button>
 
 
 {% endblock %}

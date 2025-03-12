@@ -1,0 +1,11 @@
+<svg id="animated-pencil" class="hidden md:block animated-pencil" version="1.0" xmlns="http://www.w3.org/2000/svg"
+     width="150" height="150" viewBox="0 0 179.000000 322.000000"
+     preserveAspectRatio="xMidYMid meet">
+    <g transform="translate(0.000000,322.000000) scale(0.100000,-0.100000)"
+       fill="#d00000" stroke="none">
+        <path d="M1332 3013 c-17 -34 -92 -261 -277 -833 -103 -316 -256 -789 -342
+                        -1050 l-156 -475 7 -155 c4 -85 11 -159 15 -163 5 -5 53 44 108 108 l99 117
+                        42 127 c201 619 661 2051 688 2145 28 97 32 122 22 132 -13 12 -163 64 -185
+                        64 -7 0 -16 -8 -21 -17z"/>
+    </g>
+</svg>
