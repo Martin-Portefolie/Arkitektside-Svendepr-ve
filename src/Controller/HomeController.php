@@ -5,19 +5,18 @@ namespace App\Controller;
 use App\Repository\NewsRepository;
 use App\Repository\ProjectsRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
 
 final class HomeController extends AbstractController
 {
     #[Route('/', name: 'app_home')]
-    public function index(NewsRepository $newsRepository, ProjectsRepository $projectsRepository): Response
+    public function index(Request $request,NewsRepository $newsRepository, ProjectsRepository $projectsRepository): Response
     {
 
-        $news = $newsRepository->findAll(); 
+//        $news = $newsRepository->findAll();
         $projects = $projectsRepository->findAll();
-    
-
         $about = [
             "whoarewe" => "Design Architects består af de 3 partnere  Dan Verbaum, John P. Herluf og Niels Hoy Hansen som hver især gennem årene er blevet internationalt anerkendte for deres spændende og nyskabende bygge projekter. De er nu gået sammen om at skabe firmaet Design Architects i forsøget på at skabe et kreativt, udviklende og inspirerende miljø.  Firmaet henvender sig til både det danske marked, men i allerhøjeste grad også det udenlandske.",
             "founded" => "Design Architects startede op som et freelance projekt da de 3 tilfældigt mødtes for 4 år siden, i forbindelse med Verdensudstillingen. Over en stille Carlsberg øl (i den danske pavillion, selvfølgelig), fandt de at de sammen kunne skabe en særdeles kreativ sfære, hvori de hver især kunne bidrage med deres ideer som uden videre passede ind i hinanden. Dette ville de alle 3 gerne prøve at bruge lidt mere sjæl, tid og arbejde på, og ud af det voksede Design Architects.  De første projekter er allerede i hus, og er ved at blive bygget, og mange flere nye venter lige om hjørnet, nu hvor de alle 3 er gået 100% ind i samarbejdet.",
@@ -26,12 +25,20 @@ final class HomeController extends AbstractController
                 "
         ];
 
+
+        $page = max(1, (int) $request->query->get('page', 1));
+        $search = $request->query->get('search', ''); // Get search term from request
+        // Fetch paginated news with search
+        $newsPagination = $newsRepository->findPaginatedNews($page, 8, !empty($search) ? $search : null);
+
         return $this->render('home/index.html.twig', [
             'controller_name' => 'HomeController',
             'about' => $about,
-            'news' => $news,
+            // 'news' => $news,
+            'newsPagination' => $newsPagination,
+            'searchTerm' => $search, // Pass search term for the form input
             'projects' => $projects,
-        ]);
+    ]);
     }
 
 

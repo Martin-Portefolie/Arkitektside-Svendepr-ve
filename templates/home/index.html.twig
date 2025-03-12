@@ -142,7 +142,6 @@
     </div>
 </section>
 
-
     <!-- News Section -->
     <section class="bg-gray-50 w-full mx-auto px-6 py-16 mt-20" data-controller="news">
         <div class="max-w-6xl mx-auto">
@@ -154,8 +153,22 @@
                 <p class="text-red-600 mt-2">Seneste projekter og trends inden for arkitektur og design</p>
             </div>
 
+            <!-- Search Bar -->
+            <form method="get" action="{{ path('app_home') }}" class="mb-6 flex space-x-2">
+                <input type="text"
+                       name="search"
+                       value="{{ searchTerm|default('') }}"
+                       placeholder="Søg i nyheder..."
+                       class="px-4 py-2 w-full border rounded">
+                <button type="submit"
+                        class="bg-red-600 text-white px-4 py-2 rounded hover:bg-red-700 transition">
+                    Søg
+                </button>
+            </form>
+
+            <!-- News Grid -->
             <div class="grid grid-cols-1 md:grid-cols-2 gap-12">
-                {% for newsItem in news %}
+                {% for newsItem in newsPagination %}
                     <div class="bg-white rounded-lg shadow-lg overflow-hidden transform transition-all duration-500 hover:scale-105 hover:shadow-xl">
                         <div class="p-6">
                             <h3 class="text-xl font-bold text-red-800">{{ newsItem.title }}</h3>
@@ -176,7 +189,7 @@
                             {% endif %}
                         </div>
 
-                        <!-- Collapsible  Section -->
+                        <!-- Collapsible Section -->
                         {% if newsItem.project|length > 0 %}
                             <div class="max-h-0 overflow-hidden opacity-0 transition-all duration-500 bg-gray-50 p-6 border-t border-red-800"
                                  data-news-target="project"
@@ -199,10 +212,40 @@
                             </div>
                         {% endif %}
                     </div>
+                {% else %}
+                    <p class="text-gray-600 mt-4">Ingen nyheder fundet.</p>
                 {% endfor %}
+            </div>
+
+            <!-- Pagination -->
+            <div class="mt-8 flex justify-center space-x-4">
+                {% if newsPagination.hasPreviousPage() %}
+                    <a href="{{ path('app_home', { page: newsPagination.previousPage, search: searchTerm }) }}"
+                       class="px-4 py-2 bg-gray-200 rounded hover:bg-gray-300">
+                        Forrige
+                    </a>
+                {% endif %}
+
+                {% for page in 1..newsPagination.nbPages %}
+                    <a href="{{ path('app_home', { page: page, search: searchTerm }) }}"
+                       class="px-4 py-2 rounded {% if page == newsPagination.currentPage %}bg-red-600 text-white{% else %}bg-gray-200 hover:bg-gray-300{% endif %}">
+                        {{ page }}
+                    </a>
+                {% endfor %}
+
+                {% if newsPagination.hasNextPage() %}
+                    <a href="{{ path('app_home', { page: newsPagination.nextPage, search: searchTerm }) }}"
+                       class="px-4 py-2 bg-gray-200 rounded hover:bg-gray-300">
+                        Næste
+                    </a>
+                {% endif %}
             </div>
         </div>
     </section>
+
+
+
+
 
 
     <!-- Projects -->
