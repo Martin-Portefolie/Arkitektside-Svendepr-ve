@@ -1,0 +1,260 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Hello HomeController!{% endblock %}
+{% block body %}
+
+<!-- Section Slider-->
+<section class="relative w-full h-[90vh] overflow-hidden top-0" data-controller="slider">
+    <div class="absolute inset-0 w-full h-full">
+        <div class="relative w-full h-full">
+            {% for i in 1..5 %}
+                <div class="absolute inset-0 w-full h-full transition-opacity duration-1000 {% if loop.first %}opacity-100{% else %}opacity-0{% endif %}" 
+                     data-slider-target="slide">
+                    <img src="{{ asset('images/slider/slider' ~ i ~ '.jpg') }}" class="w-full h-full object-cover" alt="Slide {{ i }}">
+                </div>
+            {% endfor %}
+        </div>
+    </div>
+</section>
+
+<!-- Navigation  -->
+<nav id="header" class="w-full bg-white shadow-md z-50 transition-all duration-300" data-controller="navbar">
+    <div class="px-6 py-4 max-w-6xl mx-auto w-full flex items-center justify-between">
+
+        <!-- Logo & Branding -->
+        <div class="flex items-center">
+            <img src="{{ asset('images/logo/logo.png') }}" alt="Logo" 
+                 class="h-16 transition-transform duration-300 hover:scale-110" 
+                 data-navbar-target="logo">
+            <span class="text-black text-lg sm:text-xl md:text-2xl font-semibold text-red-800">
+                Design Architects
+            </span>
+        </div>
+
+        <!-- Scroll Menu -->
+        <div class="hidden md:flex items-center space-x-8">
+            <a href="#About" class="nav-link">Om os</a>
+            <a href="#News" class="nav-link">Nyheder</a>
+            <a href="#Projects" class="nav-link">Projekter</a>
+            <a href="#Newsletter" class="nav-link">Nyhedsbrev</a>
+            <a href="#Contact" class="nav-link">Kontakt</a>
+            <a href="{{ path('app_login') }}" class="nav-link">Login</a>
+        </div>
+
+        <!-- Mobile Menu Button -->
+        <button class="md:hidden focus:outline-none" data-action="click->navbar#toggleMenu">
+            <svg class="w-8 h-8 text-red-800" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16m-7 6h7"></path>
+            </svg>
+        </button>
+    </div>
+
+    <!-- Mobile Menu  -->
+    <div class="mobile-menu hidden bg-white shadow-md absolute top-16 left-0 w-full flex flex-col items-center space-y-4 py-4" data-navbar-target="menu">
+        <a href="#About" class="nav-link">Om os</a>
+        <a href="#News" class="nav-link">Nyheder</a>
+        <a href="#Projects" class="nav-link">Projekter</a>
+        <a href="#Newsletter" class="nav-link">Nyhedsbrev</a>
+        <a href="#Contact" class="nav-link">Kontakt</a>
+        <a href="{{ path('app_login') }}" class="nav-link">Login</a>
+    </div>
+</nav>
+
+<!-- About Section -->
+<section class="bg-gray-100 w-full py-16 mt-20">
+    <div class="max-w-6xl mx-auto grid grid-cols-1 md:grid-cols-2 gap-12 items-center px-6">
+        <div class="relative flex flex-col justify-center items-center" data-aos="fade-right">
+            <div class="w-32 h-32 md:w-48 md:h-48 flex items-center justify-center">
+                <!-- SVG Embedded Logo -->
+                <svg id="animated-pencil" class="hidden md:block animated-pencil" version="1.0" xmlns="http://www.w3.org/2000/svg"
+                     width="150" height="150" viewBox="0 0 179.000000 322.000000"
+                     preserveAspectRatio="xMidYMid meet">
+                    <g transform="translate(0.000000,322.000000) scale(0.100000,-0.100000)"
+                       fill="#d00000" stroke="none">
+                        <path d="M1332 3013 c-17 -34 -92 -261 -277 -833 -103 -316 -256 -789 -342
+                        -1050 l-156 -475 7 -155 c4 -85 11 -159 15 -163 5 -5 53 44 108 108 l99 117
+                        42 127 c201 619 661 2051 688 2145 28 97 32 122 22 132 -13 12 -163 64 -185
+                        64 -7 0 -16 -8 -21 -17z"/>
+                    </g>
+                </svg>
+            </div>
+            <p class="text-red-700 text-lg font-semibold mt-4 text-center">
+                "Det ligger til vores kreative arkitekter at fokusere på innovative løsninger, hvor de mest moderne kvalitetsmaterialer bliver brugt."
+            </p>
+        </div>
+
+        <div class="text-gray-900" data-aos="fade-left">
+            <h2 id="About" class="text-4xl font-bold text-red-800 uppercase tracking-wide relative inline-block">
+                DESIGN ARCHITECTS
+                <span class="absolute left-0 bottom-0 w-full h-1 bg-red-600 transform scale-x-75 origin-left"></span>
+            </h2>
+            <p class="text-lg font-semibold text-red-600 mb-4">- DIN ARKITEKT I ÅRHUS</p>
+            <p class="text-gray-700 leading-relaxed mb-4">{{ about.whoarewe }}</p>
+            <p class="text-gray-700 leading-relaxed mb-4">{{ about.founded }}</p>
+            <p class="text-gray-700 leading-relaxed">{{ about.weoffer }}</p>
+        </div>
+
+    </div>
+</section>
+
+
+
+
+    <!-- Newsletter section -->
+    <section class="bg-red-800 w-full py-16 mt-20 shadow-md">
+        <div class="max-w-6xl mx-auto px-6 py-4">
+            <div class="grid grid-cols-1 md:grid-cols-2 items-center gap-8">
+           
+            <div class="text-left mb-12 relative">
+                <h2 id="Newsletter" class="text-3xl font-bold text-white uppercase tracking-wide relative inline-block">
+                    Tilmeld Vores Nyhedsbrev
+                    <span class="absolute left-0 bottom-0 w-full h-1 bg-white transform scale-x-75 origin-left"></span>
+                </h2>
+                <p class="text-white mt-2">
+                    Hold dig orienteret om vores projekter, få nyheder fra vores verden, og kom bag om historierne.
+                </p>
+            </div>
+
+
+            <form data-controller="newsletter" class="relative flex flex-col w-full max-w-md mx-auto md:ml-auto">
+                <div class="relative w-full">
+                    <input type="email" 
+                           name="email"
+                           placeholder="Indtast Email" 
+                           class="placeholder:text-white text-white text-sm bg-transparent border-b-2 border-white w-full py-3 focus:outline-none focus:border-white transition-all duration-300" 
+                           required 
+                           data-newsletter-target="email"/>
+
+                    <button type="button" 
+                            class="absolute right-0 bottom-2 bg-white text-red-800 px-6 py-2 rounded-lg font-semibold shadow-md hover:bg-gray-200 transition-all duration-300"
+                            data-action="click->newsletter#subscribe">
+                        Tilmeld
+                    </button>
+                </div>
+                <div class="hidden text-white text-lg text-center md:text-left mt-4" data-newsletter-target="successMessage">
+                    Du er nu tilmeldt vores nyhedsbrev!
+                </div>
+                <div class="hidden text-red-200 text-lg text-center md:text-left mt-4" data-newsletter-target="errorMessage">
+                    Der opstod en fejl. Prøv igen.
+                </div>
+            </form>
+        </div>
+    </div>
+</section>
+
+
+    <!-- News Section -->
+    <section class="bg-gray-50 w-full mx-auto px-6 py-16 mt-20" data-controller="news">
+        <div class="max-w-6xl mx-auto">
+            <div class="text-left mb-12 relative">
+                <h2 id="Projects" class="text-4xl font-bold text-red-800 uppercase tracking-wide relative inline-block">
+                    Nyheder
+                    <span class="absolute left-0 bottom-0 w-full h-1 bg-red-600 transform scale-x-75 origin-left"></span>
+                </h2>
+                <p class="text-red-600 mt-2">Seneste projekter og trends inden for arkitektur og design</p>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-12">
+                {% for newsItem in news %}
+                    <div class="bg-white rounded-lg shadow-lg overflow-hidden transform transition-all duration-500 hover:scale-105 hover:shadow-xl">
+                        <div class="p-6">
+                            <h3 class="text-xl font-bold text-red-800">{{ newsItem.title }}</h3>
+                            <p class="text-gray-700 mt-2 text-sm leading-relaxed line-clamp-3">
+                                {{ newsItem.description }}
+                            </p>
+
+                            {% if newsItem.project|length > 0 %}
+                                <button class="text-red-700 hover:text-red-900 mt-4 text-sm font-semibold flex items-center"
+                                        data-action="click->news#toggle"
+                                        data-id="{{ newsItem.id }}"
+                                        data-news-target="toggleButton">
+                                    <span class="mr-2">Læs mere</span>
+                                    <svg class="w-4 h-4 transition-transform transform rotate-0" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
+                                    </svg>
+                                </button>
+                            {% endif %}
+                        </div>
+
+                        <!-- Collapsible Projects Section -->
+                        {% if newsItem.project|length > 0 %}
+                            <div class="max-h-0 overflow-hidden opacity-0 transition-all duration-500 bg-gray-50 p-6 border-t border-red-800"
+                                 data-news-target="project"
+                                 data-id="{{ newsItem.id }}">
+                                {% for project in newsItem.project %}
+                                    <div class="border-b border-gray-300 mb-4 pb-4">
+                                        <div class="grid grid-cols-1 gap-4">
+                                            <div>
+                                                <h4 class="text-lg font-semibold text-red-800">{{ project.title }}</h4>
+                                                <p class="text-gray-700 text-sm">{{ project.description }}</p>
+                                            </div>
+                                            <div class="overflow-hidden rounded-lg">
+                                                <img class="w-full h-40 object-cover rounded-lg transition-transform duration-700 group-hover:scale-100"
+                                                     src="{{ asset('images/project/' ~ project.image) }}"
+                                                     alt="{{ project.title }}" />
+                                            </div>
+                                        </div>
+                                    </div>
+                                {% endfor %}
+                            </div>
+                        {% endif %}
+                    </div>
+                {% endfor %}
+            </div>
+        </div>
+    </section>
+
+
+
+
+    <!-- Projects -->
+<section class="bg-gray-100 py-16 mt-20">
+    <div class="max-w-6xl mx-auto px-6">
+        <div class="text-left mb-12 relative">
+            <h2 id="Projects" class="text-4xl font-bold text-red-800 uppercase tracking-wide relative inline-block">
+                Projekter
+                <span class="absolute left-0 bottom-0 w-full h-1 bg-red-600 transform scale-x-75 origin-left"></span>
+            </h2>
+            <p class="text-red-600 mt-2">Se vores seneste arkitektoniske mesterværke</p>
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-12">
+            {% for projectsItem in projects %}
+                <div class="bg-white rounded-lg shadow-md overflow-hidden">
+                    <!-- Image Grid -->
+                    <div class="grid grid-cols-2 gap-2 p-4">
+                        {% for image in projectsItem.photos|slice(0, 4) %}
+                            <div class="relative group">
+                                <img src="{{ asset('images/projects/' ~ image) }}" alt="{{ projectsItem.title }}" 
+                                     class="w-full h-40 object-cover rounded-md transition-transform transform group-hover:scale-105">
+                            </div>
+                        {% endfor %}
+                    </div>
+
+                    <!-- Project Info -->
+                    <div class="p-6">
+                        <h3 class="text-xl font-bold text-red-800">{{ projectsItem.title }}</h3>
+                        
+                        {% if projectsItem.place %}
+                            <p class="text-gray-600">{{ projectsItem.place }}, {{ projectsItem.country }}</p>
+                        {% endif %}
+                        
+                        <p class="text-gray-700 mt-2 text-sm leading-relaxed line-clamp-4">
+                            {{ projectsItem.text }}
+                        </p>
+
+                        <div class="mt-4">
+                            <button class="text-red-700 hover:text-red-900 text-sm font-semibold" 
+                                    data-action="click->news#toggle" data-id="{{ projectsItem.id }}">
+                                Læs mere 
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+    </div>
+</section>
+
+
+{% endblock %}

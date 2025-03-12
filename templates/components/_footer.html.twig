@@ -1,0 +1,51 @@
+<!-- Footer -->
+<footer id="Contact" class="bg-red-600 text-white py-12 px-6">
+    <div class="max-w-6xl mx-auto grid grid-cols-1 md:grid-cols-2 gap-12">
+
+        <!-- Contact Section -->
+        <div class="space-y-4">
+            <h2 class="text-2xl font-bold">Kontakt</h2>
+            <p class="text-lg font-semibold">Design Architects</p>
+            <p class="text-sm">Vinkelvej 39, 8000 Århus</p>
+            <p class="text-sm">
+                Email: <a href="mailto:info@design.dk" class="underline hover:text-gray-300 transition">info@design.dk</a>
+            </p>
+            <p class="text-sm">Telefon: <span class="font-semibold">23 35 10 00</span></p>
+        </div>
+
+        <!-- Employee Section -->
+        <div>
+            <h2 class="text-2xl font-bold mb-4">Ansatte</h2>
+
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+                {% set employees = [
+                    { name: 'Mikkel Arbusen', phone: '23 35 10 07', email: 'mikkeldesign.dk', img: 'MikkelArbusen.png', role: 'Tegnestue' },
+                    { name: 'Henriette Klausen', phone: '23 35 10 08', email: 'mikkeldesign.dk', img: 'HenrietteKlausen.png', role: 'Tegnestue' },
+                    { name: 'Dan Verbaum', phone: '23 35 10 04', email: 'dan@design.dk', img: 'DanVerbaum.png', role: 'Partnere' },
+                    { name: 'John P. Herluf', phone: '23 35 10 05', email: 'john@design.dk', img: 'johnherluf.png', role: 'Partnere' },
+                    { name: 'Niels Hoy Hansen', phone: '23 35 10 06', email: 'niels@design.dk', img: 'NielsHoyHansen.png', role: 'Partnere' },
+                    { name: 'Lene Ryum', phone: '23 35 10 01', email: 'Lene@design.dk', img: 'Leneryum.png', role: 'Sekretær' }
+                ] %}
+
+                {% for employee in employees %}
+                    <div class="bg-white/10 p-4 rounded-lg shadow-md text-center">
+                        <a href="#" target="_blank">
+                            <img src="{{ asset('images/employee/' ~ employee.img) }}" 
+                                 alt="{{ employee.name }}" 
+                                 class="h-24 w-24 rounded-full mx-auto mb-3 border-4 border-white shadow-lg">
+                        </a>
+                        <h3 class="text-lg font-semibold">{{ employee.name }}</h3>
+                        <p class="text-sm text-gray-200">{{ employee.role }}</p>
+                        <p class="text-sm"> {{ employee.phone }}</p>
+                        <p class="text-sm"> <a href="mailto:{{ employee.email }}" class="underline hover:text-gray-300 transition">{{ employee.email }}</a></p>
+                    </div>
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+
+    <!-- Bottom Copyright -->
+    <div class="mt-12 text-center text-sm text-gray-300">
+        © {{ "now"|date("Y") }} Design Architects. Alle rettigheder forbeholdes.
+    </div>
+</footer>
