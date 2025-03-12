@@ -15,7 +15,7 @@ final class HomeController extends AbstractController
     public function index(Request $request,NewsRepository $newsRepository, ProjectsRepository $projectsRepository): Response
     {
 
-//        $news = $newsRepository->findAll();
+        //  $news = $newsRepository->findAll(); Not nescesary since pagerfanta takes care of fetching data.
         $projects = $projectsRepository->findAll();
         $about = [
             "whoarewe" => "Design Architects består af de 3 partnere  Dan Verbaum, John P. Herluf og Niels Hoy Hansen som hver især gennem årene er blevet internationalt anerkendte for deres spændende og nyskabende bygge projekter. De er nu gået sammen om at skabe firmaet Design Architects i forsøget på at skabe et kreativt, udviklende og inspirerende miljø.  Firmaet henvender sig til både det danske marked, men i allerhøjeste grad også det udenlandske.",
@@ -27,16 +27,14 @@ final class HomeController extends AbstractController
 
 
         $page = max(1, (int) $request->query->get('page', 1));
-        $search = $request->query->get('search', ''); // Get search term from request
-        // Fetch paginated news with search
-        $newsPagination = $newsRepository->findPaginatedNews($page, 8, !empty($search) ? $search : null);
+        $search = $request->query->get('search', '');
+        $newsPagination = $newsRepository->findPaginatedNews($page, 6, !empty($search) ? $search : null);
 
         return $this->render('home/index.html.twig', [
             'controller_name' => 'HomeController',
             'about' => $about,
-            // 'news' => $news,
             'newsPagination' => $newsPagination,
-            'searchTerm' => $search, // Pass search term for the form input
+            'searchTerm' => $search,
             'projects' => $projects,
     ]);
     }
